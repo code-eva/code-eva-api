@@ -1,17 +1,12 @@
 
 version: '3.8'
 services:
-  db:
+  code-eva-db:
     image: postgres:15.2-alpine
-    restart: unless-stopped
+    restart: no
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=code-eva
+      - POSTGRES_PASSWORD=code-eva
+      - POSTGRES_DB=code-eva
     ports:
       - '5432:5432'
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-
-volumes:
-    pg_data:
-      driver: local
