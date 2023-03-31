@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS user_account(
 	"password" varchar(255) NOT NULL,
 	is_enabled boolean NOT NULL,
 	"role" varchar(255) NULL,
+    CONSTRAINT uk_email UNIQUE (email),
 	CONSTRAINT uk_username UNIQUE (username),
 	CONSTRAINT fk_user_account_email FOREIGN KEY (email) REFERENCES email(email),
 	CONSTRAINT fk_user_account_role FOREIGN KEY ("role") REFERENCES user_role("role")
@@ -14,18 +15,24 @@ CREATE TABLE IF NOT EXISTS user_account(
 
 CREATE TABLE IF NOT EXISTS email(
 	email varchar(255) PRIMARY KEY,
-	verified boolean NOT NULL
+	verified boolean DEFAULT FALSE,
 );
 
 CREATE TABLE IF NOT EXISTS user_role(
-	"role" varchar(255) PRIMARY KEY NOT NULL,
+	"role" varchar(255) PRIMARY KEY,
 	descirption varchar(255) NULL,
-	"permission" varchar(255) NOT NULL,
-	CONSTRAINT fk_user_account_permission FOREIGN KEY ("permission") REFERENCES permissions("permission")
+	"permission" varchar(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS permissions(
+	"permission" varchar(255) PRIMARY KEY,
+	description varchar(255) NULL
+);
+
+CREATE TABLE IF NOT EXISTS role_permissions(
+	"role" varchar(255) NOT NULL,
 	"permission" varchar(255) NOT NULL,
-	description varchar(255) NULL,
-	CONSTRAINT uk_permission UNIQUE ("permission")
+	CONSTRAINT fk_user_role FOREIGN KEY ("role") REFERENCES user_role("role"),
+	CONSTRAINT fk_permission FOREIGN KEY ("permission") REFERENCES permissions("permission"),
+	PRIMARY KEY("role","permission")
 );
