@@ -2,6 +2,8 @@ package com.codeeva.codeeva.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,11 @@ import lombok.Setter;
 public class RolePermissions {
 
     @Id
-    private String role;
-    private String permission;
+    @ManyToOne
+    @JoinColumn(name = "role")
+    private UserRole role;
+
+    @ManyToOne
+    @JoinColumn(name = "permission")
+    private Permissions permission;
 }
