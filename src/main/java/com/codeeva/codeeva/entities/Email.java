@@ -10,8 +10,10 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-@NoArgsConstructor @AllArgsConstructor
-@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 
 
@@ -19,7 +21,6 @@ public class Email {
 
     @Id
     @javax.validation.constraints.Email
-    @Column(unique = true)
     private String email;
 
     @Column(nullable = false)

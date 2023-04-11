@@ -13,8 +13,11 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.UUID;
 
-@NoArgsConstructor @AllArgsConstructor
-@Getter @Setter
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "user_account")
 public class User {
@@ -29,13 +32,11 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @NotEmpty(message = "Password is required")
-    @Size(min = 2, max = 32, message = "Password must be between 8 and 32 characters long")
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false)
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "email")
     private Email email;
 
@@ -62,9 +63,9 @@ public class User {
     private Boolean isEnabled = true;
 
     @Override
-    public boolean equals(Object obj){
-        if(obj == null || Hibernate.getClass(this) != Hibernate.getClass(obj)) return false;
-        if(this == obj) return true;
+    public boolean equals(Object obj) {
+        if (obj == null || Hibernate.getClass(this) != Hibernate.getClass(obj)) return false;
+        if (this == obj) return true;
         User user = (User) obj;
         return Objects.equals(id, user.id);
     }
